@@ -11,14 +11,14 @@ function Userdata() {
    useEffect(()=>{
 
     const fetch=async()=>{
-     const response= await axios.get("http://localhost:8080/api/getAll")
+     const response= await axios.get("https://crud-ix4s.onrender.com/api/getAll")
      setUser(response.data);
     }
    fetch();
   }, [])
 
   const deleteUser=async(userId)=>{
-   await axios.delete(`http://localhost:8080/api/delete/${userId}`)
+   await axios.delete(`https://crud-ix4s.onrender.com/api/delete/${userId}`)
    .then((response)=>{
      setUser((prevuser)=>prevuser.filter((user)=> user._id!==userId))
      console.log(response);

@@ -2,7 +2,7 @@ import React from "react";
 import {Link, useNavigate} from "react-router-dom";
  import {useState} from "react";
  import axios from "axios";
-
+ 
 function Add() {
 
     const user={
@@ -22,7 +22,7 @@ function Add() {
 
     const submitForm=async(e)=>{
         e.preventDefault();
-        await axios.post("http://localhost:8080/api/create", users)
+        await axios.post(`https://crud-ix4s.onrender.com/api/create`, users)
         .then((response)=>{
             console.log(response);
             Navigate("/");

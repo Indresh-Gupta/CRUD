@@ -24,7 +24,7 @@ function Edit() {
   }
 
   useEffect(()=>{
-      axios.get(`http://localhost:8080/api/getOne/${id}`)
+      axios.get(`https://crud-ix4s.onrender.com/api/getOne/${id}`)
       .then((response)=>{
         setUser(response.data);
       })
@@ -35,7 +35,7 @@ function Edit() {
 
   const submit=async(e)=>{
     e.preventDefault();
-   await axios.put(`http://localhost:8080/api/update/${id}`, user)
+   await axios.put(`https://crud-ix4s.onrender.com/api/update/${id}`, user)
     .then((response)=>{
       console.log(response);
       Navigate("/");
