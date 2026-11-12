@@ -9,12 +9,14 @@ const app=express();
 app.use(bodyParser.json());
 app.use(cors());
 dotenv.config();
-
+import dns from 'node:dns/promises';
+// Change DNS
+dns.setServers(["8.8.8.8", "1.1.1.1"]);
 
 
 const port =process.env.PORT || 8000;
 const URL=process.env.MONGOURL;
-
+// console.log(URL);
 
 
 app.get("/",(req, res)=>{
