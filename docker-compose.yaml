@@ -5,7 +5,7 @@ services:
       dockerfile: Dockerfile
     container_name: crud-frontend
     ports:
-      - "3000:80"       # host:3000 -> container's Nginx on 80
+      - "3000:80"
     depends_on:
       - backend
     restart: unless-stopped
@@ -16,10 +16,10 @@ services:
       dockerfile: Dockerfile
     container_name: crud-backend
     ports:
-      - "8000:8000"      # exposed to host too, so you can hit the API directly (Postman, curl)
+      - "8000:8000"
     environment:
-      PORT: 8000
-      MONGOURL: mongodb://mongo:27017/crud_db
+      PORT: "8000"
+      MONGOURL: "mongodb://mongo:27017/crud_db"
     depends_on:
       - mongo
     restart: unless-stopped
@@ -28,7 +28,7 @@ services:
     image: mongo:7
     container_name: crud-mongo
     ports:
-      - "27017:27017"    # optional - lets you connect Compass/mongosh from your host
+      - "27017:27017"
     volumes:
       - mongo-data:/data/db
     restart: unless-stopped
