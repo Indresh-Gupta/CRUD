@@ -5,29 +5,54 @@ import {Link, useNavigate} from "react-router-dom";
  
 function Add() {
 
-    const user={
-        fname:"",
-        lname:"",
-        email:"",
-        password:""
-    }
+    // const user={
+    //     fname:"",
+    //     lname:"",
+    //     email:"",
+    //     password:""
+    // }
   
-    const [users, setUser]=useState({user});
-    const Navigate=useNavigate();
+    // const [users, setUser]=useState(user);
+    // const Navigate=useNavigate();
 
-    const inputhandler=(e)=>{
-        const {name, value}=e.target;
-       setUser({...users, [name]:value});
-    }
+    // const inputhandler=(e)=>{
+    //     const {name, value}=e.target;
+    //    setUser({...users, [name]:value});
+    // }
 
-    const submitForm=async(e)=>{
-        e.preventDefault();
-        await axios.post(`https://crud-ix4s.onrender.com/api/create`, users)
-        .then((response)=>{
-            console.log(response);
-            Navigate("/");
-        }).catch(error=>  console.log("some error occur:", error));
-    }
+    // const submitForm=async(e)=>{
+    //     e.preventDefault();
+    //     await axios.post(`https://crud-ix4s.onrender.com/api/create`, users)
+    //     .then((response)=>{
+    //         console.log(response);
+    //         Navigate("/");
+    //     }).catch(error=>  console.log("some error occur:", error));
+    // }
+
+    const [user, setUser] = useState({
+  fname: "",
+  lname: "",
+  email: "",
+  password: "",
+});
+
+const inputhandler = (event) => {
+  const { name, value } = event.target;
+
+  setUser((prev) => ({
+    ...prev,
+    [name]: value,
+  }));
+};
+
+const submitForm = async (event) => {
+  event.preventDefault();
+
+  await axios.post(
+    "https://crud-ix4s.onrender.com/api/create",
+    user
+  );
+};
 
 
     return (  

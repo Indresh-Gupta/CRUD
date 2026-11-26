@@ -1,12 +1,12 @@
+
 import React from "react";
 
 import {
     render,
     screen,
-    waitFor
+    waitFor,
+    fireEvent
 } from "@testing-library/react";
-
-import userEvent from "@testing-library/user-event";
 
 import {
     MemoryRouter,
@@ -20,7 +20,6 @@ import Edit from "./edit";
 
 jest.mock("axios");
 
-
 describe("Edit Component Testing", () => {
 
     const mockUser = {
@@ -31,11 +30,8 @@ describe("Edit Component Testing", () => {
     };
 
     beforeEach(() => {
-
         jest.clearAllMocks();
-
     });
-
 
     test("1. Should fetch particular user using ID", async () => {
 
@@ -44,30 +40,32 @@ describe("Edit Component Testing", () => {
         });
 
         render(
-            <MemoryRouter initialEntries={["/edit/101"]}>
-
+            <MemoryRouter
+                initialEntries={["/edit/101"]}
+                future={{
+                    v7_startTransition: true,
+                    v7_relativeSplatPath: true
+                }}
+            >
                 <Routes>
-
                     <Route
                         path="/edit/:id"
                         element={<Edit />}
                     />
-
+                    <Route
+                        path="/"
+                        element={<div>User List</div>}
+                    />
                 </Routes>
-
             </MemoryRouter>
         );
 
         await waitFor(() => {
-
             expect(axios.get).toHaveBeenCalledWith(
                 "https://crud-ix4s.onrender.com/api/getOne/101"
             );
-
         });
-
     });
-
 
     test("2. Should display existing user information", async () => {
 
@@ -76,38 +74,40 @@ describe("Edit Component Testing", () => {
         });
 
         render(
-            <MemoryRouter initialEntries={["/edit/101"]}>
-
+            <MemoryRouter
+                initialEntries={["/edit/101"]}
+                future={{
+                    v7_startTransition: true,
+                    v7_relativeSplatPath: true
+                }}
+            >
                 <Routes>
-
                     <Route
                         path="/edit/:id"
                         element={<Edit />}
                     />
-
+                    <Route
+                        path="/"
+                        element={<div>User List</div>}
+                    />
                 </Routes>
-
             </MemoryRouter>
         );
 
         expect(
-            await screen.findByLabelText(/first name/i)
-        ).toHaveValue("Indresh");
+            (await screen.findByLabelText(/first name/i)).value
+        ).toBe("Indresh");
 
         expect(
-            screen.getByLabelText(/last name/i)
-        ).toHaveValue("Gupta");
+            screen.getByLabelText(/last name/i).value
+        ).toBe("Gupta");
 
         expect(
-            screen.getByLabelText(/email_id/i)
-        ).toHaveValue("indresh@gmail.com");
-
+            screen.getByLabelText(/email_id/i).value
+        ).toBe("indresh@gmail.com");
     });
 
-
     test("3. Should update user information using PUT API", async () => {
-
-        const user = userEvent.setup();
 
         axios.get.mockResolvedValue({
             data: mockUser
@@ -121,17 +121,23 @@ describe("Edit Component Testing", () => {
         });
 
         render(
-            <MemoryRouter initialEntries={["/edit/101"]}>
-
+            <MemoryRouter
+                initialEntries={["/edit/101"]}
+                future={{
+                    v7_startTransition: true,
+                    v7_relativeSplatPath: true
+                }}
+            >
                 <Routes>
-
                     <Route
                         path="/edit/:id"
                         element={<Edit />}
                     />
-
+                    <Route
+                        path="/"
+                        element={<div>User List</div>}
+                    />
                 </Routes>
-
             </MemoryRouter>
         );
 
@@ -139,21 +145,26 @@ describe("Edit Component Testing", () => {
             /first name/i
         );
 
-        await user.clear(firstName);
+        // Update the first name directly
+        fireEvent.change(firstName, {
+            target: {
+                name: "fname",
+                value: "Indresh Updated"
+            }
+        });
 
-        await user.type(
-            firstName,
-            "Indresh Updated"
-        );
+        // Verify that the input value is updated
+        expect(firstName.value).toBe("Indresh Updated");
 
-        await user.click(
+        // Click Update button
+        fireEvent.click(
             screen.getByRole("button", {
                 name: /update/i
             })
         );
 
+        // Verify PUT API request
         await waitFor(() => {
-
             expect(axios.put).toHaveBeenCalledWith(
                 "https://crud-ix4s.onrender.com/api/update/101",
                 {
@@ -163,9 +174,7 @@ describe("Edit Component Testing", () => {
                     email: "indresh@gmail.com"
                 }
             );
-
         });
-
     });
 
 });

@@ -33,25 +33,25 @@ describe("Add Component Testing", () => {
 
         expect(
             screen.getByLabelText(/first name/i)
-        ).toBeInTheDocument();
+        ).toBeTruthy();
 
         expect(
             screen.getByLabelText(/last name/i)
-        ).toBeInTheDocument();
+        ).toBeTruthy();
 
         expect(
             screen.getByLabelText(/email/i)
-        ).toBeInTheDocument();
+        ).toBeTruthy();
 
         expect(
             screen.getByLabelText(/password/i)
-        ).toBeInTheDocument();
+        ).toBeTruthy();
 
         expect(
             screen.getByRole("button", {
                 name: /add data/i
             })
-        ).toBeInTheDocument();
+        ).toBeTruthy();
 
     });
 
@@ -86,21 +86,24 @@ describe("Add Component Testing", () => {
             "123456"
         );
 
+        // expect(
+        //     screen.getByLabelText(/first name/i)
+        // ).toBe("Indresh");
         expect(
-            screen.getByLabelText(/first name/i)
-        ).toHaveValue("Indresh");
+  screen.getByLabelText(/first name/i).value
+).toBe("Indresh");
 
         expect(
-            screen.getByLabelText(/last name/i)
-        ).toHaveValue("Gupta");
+            screen.getByLabelText(/last name/i).value
+        ).toBe("Gupta");
 
         expect(
-            screen.getByLabelText(/email/i)
-        ).toHaveValue("indresh@gmail.com");
+            screen.getByLabelText(/email/i).value
+        ).toBe("indresh@gmail.com");
 
         expect(
-            screen.getByLabelText(/password/i)
-        ).toHaveValue("123456");
+            screen.getByLabelText(/password/i).value
+        ).toBe("123456");
 
     });
 
