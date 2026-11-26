@@ -1,33 +1,9 @@
-import React from "react";
-import {Link, useNavigate} from "react-router-dom";
+
+import {Link,} from "react-router-dom";
  import {useState} from "react";
  import axios from "axios";
  
 function Add() {
-
-    // const user={
-    //     fname:"",
-    //     lname:"",
-    //     email:"",
-    //     password:""
-    // }
-  
-    // const [users, setUser]=useState(user);
-    // const Navigate=useNavigate();
-
-    // const inputhandler=(e)=>{
-    //     const {name, value}=e.target;
-    //    setUser({...users, [name]:value});
-    // }
-
-    // const submitForm=async(e)=>{
-    //     e.preventDefault();
-    //     await axios.post(`https://crud-ix4s.onrender.com/api/create`, users)
-    //     .then((response)=>{
-    //         console.log(response);
-    //         Navigate("/");
-    //     }).catch(error=>  console.log("some error occur:", error));
-    // }
 
     const [user, setUser] = useState({
   fname: "",
